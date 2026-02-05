@@ -117,11 +117,18 @@ require("lazy").setup({
   },
 
   -- Treesitter for syntax highlighting
-  {
+{
     "nvim-treesitter/nvim-treesitter",
+    version = "v0.9.2", 
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup({
+      local ok, configs = pcall(require, "nvim-treesitter.configs")
+      if not ok then
+        vim.notify("Treesitter configs module not found. Highlighting might be limited.", vim.log.levels.WARN)
+        return
+      end
+
+      configs.setup({
         ensure_installed = { "markdown", "markdown_inline", "lua", "vim" },
         auto_install = true,
         highlight = {
