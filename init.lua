@@ -569,6 +569,9 @@ keymap('n', '<leader>da', ':close<CR>', opts)
 -- Clear search highlighting
 keymap('n', '<Esc>', ':noh<CR>', opts)
 
+-- Terminal insert to normal
+vim.api.nvim_set_keymap('t', '<A-l>', '<C-\\><C-n>', { noremap = true, silent = true })
+
 -- ============================================================================
 -- AUTO COMMANDS
 -- ============================================================================
