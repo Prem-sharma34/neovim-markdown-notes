@@ -26,11 +26,13 @@ vim.opt.splitbelow = true
 vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.backup = false
+vim.opt.guicursor = "a:hor20"
 
 -- Set leader key to space
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
+-- copy and paste 
+vim.opt.clipboard = "unnamedplus"
 -- ============================================================================
 -- PLUGIN MANAGER - Lazy.nvim
 -- ============================================================================
@@ -47,11 +49,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 -- ============================================================================
 -- THEME SELECTION
 -- Change this to switch themes easily!
 -- ============================================================================
-local ACTIVE_THEME = "catppuccin" -- Options: github_dark, github_dark_dimmed, 
+local ACTIVE_THEME = "vscode" -- Options: github_dark, github_dark_dimmed, 
                                     -- carbonfox, oxocarbon, moonlight, tokyonight,
                                     -- vscode, kanagawa, catppuccin
 
@@ -61,6 +64,17 @@ local ACTIVE_THEME = "catppuccin" -- Options: github_dark, github_dark_dimmed,
 require("lazy").setup({
   -- ============================================================================
   -- THEMES COLLECTION - All minimal dark themes
+-- Example using lazy.nvim
+{
+  "pocco81/auto-save.nvim",
+  config = function()
+    require("auto-save").setup({
+      enabled = true,
+      trigger_events = {"InsertLeave", "TextChanged"},
+      write_all_buffers = true,
+    })
+  end,
+},
   -- ============================================================================
   
   -- GitHub Theme (Official GitHub colors)
@@ -380,7 +394,7 @@ end
 
 -- Auto-save for markdown files
 vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, {
-  pattern = "*.md",
+  pattern = "*",
   callback = function()
     if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
       vim.cmd("silent! write")
@@ -568,7 +582,6 @@ keymap('n', '<leader>da', ':close<CR>', opts)
 
 -- Clear search highlighting
 keymap('n', '<Esc>', ':noh<CR>', opts)
-
 -- Terminal insert to normal
 vim.api.nvim_set_keymap('t', '<A-l>', '<C-\\><C-n>', { noremap = true, silent = true })
 
@@ -681,5 +694,3 @@ vim.api.nvim_create_user_command('NewTemplate', function(opts)
 end, { nargs = 1 })
 
 -- Print welcome message with current theme
-print("📝 Note-taking setup loaded! Active theme: " .. ACTIVE_THEME)
-print("Use <Space>ff to find notes, <Space>nn for new note, <Space>th to switch themes")
