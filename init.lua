@@ -451,10 +451,10 @@ keymap('n', '<leader>o', ':NvimTreeFocus<CR>', opts)
 
 -- Telescope - Finding notes
 keymap('n', '<leader>ff', function()
-  require('telescope.builtin').find_files({ cwd = notes_dir })
+  require('telescope.builtin').find_files()
 end, { desc = 'Find notes' })
 keymap('n', '<leader>fg', function()
-  require('telescope.builtin').live_grep({ cwd = notes_dir })
+  require('telescope.builtin').live_grep()
 end, { desc = 'Search in notes' })
 keymap('n', '<leader>fr', require('telescope.builtin').oldfiles, { desc = 'Recent files' })
 
